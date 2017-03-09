@@ -1,0 +1,67 @@
+version: '2'
+services:
+  esmaster:
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.2.1
+    container_name: esmaster
+    environment:
+      - cluster.name=heisenberg
+      - xpack.security.enabled=false
+      - node.max_local_storage_nodes=4
+      - transport.host=0.0.0.0
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    mem_limit: 1g
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - /home/tomsen/Talks/datawrangling/es/elasticsearch/data:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+    networks:
+      - esnet
+
+  esnode:
+    image: docker.elastic.co/elasticsearch/elasticsearch:5.2.1
+    container_name: esnode
+    environment:
+      - cluster.name=heisenberg
+      - bootstrap.memory_lock=true
+      - xpack.security.enabled=false
+      - node.max_local_storage_nodes=4
+      - transport.host=0.0.0.0
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "discovery.zen.ping.unicast.hosts=esmaster"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    mem_limit: 1g
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - /home/tomsen/Talks/datawrangling/es/elasticsearch/data:/usr/share/elasticsearch/data
+    networks:
+      - esnet
+
+
+  cerebro:
+    image: yannart/cerebro:latest
+    container_name: cerebro
+    ports:
+      - 9000:9000
+    networks:
+      - esnet
+
+networks:
+  esnet:
+    driver: bridge

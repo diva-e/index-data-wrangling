@@ -1,0 +1,33 @@
+{
+    "settings": {
+	"index": {
+            "number_of_shards": "3",
+            "number_of_replicas": "1"
+	}
+    },
+    "mappings": {	
+	"movie": {
+            "properties": {
+		"id": {
+		    "type": "keyword"
+		},
+		"name": {
+		    "type": "text",
+		    "copy_to":"name_copy"
+		},
+		"name_copy": {
+		    "type": "text"
+		},
+		"genre": {
+		    "type": "keyword"
+		},
+		"directed_by": {
+		    "type": "text"
+		},
+		"initial_release_date": {
+		    "type": "date"
+		}
+	    }
+	}
+    }
+}

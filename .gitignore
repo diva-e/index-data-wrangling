@@ -1,0 +1,7 @@
+# ignore emacs backups
+*~
+# ignore solr installations and archives
+solr-*
+# ignore es index data
+nodes
+

@@ -1,0 +1,13 @@
+version: '2'
+services:
+  logstash:
+    image: docker.elastic.co/logstash/logstash:5.2.2
+    container_name: logstash
+    volumes:
+      - ~/Talks/datawrangling/es/logstash/pipeline/:/usr/share/logstash/pipeline/
+    networks:
+      - es_esnet
+
+networks:
+  es_esnet:
+    external: true
