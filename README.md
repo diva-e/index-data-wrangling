@@ -12,7 +12,8 @@ Es wird eine solr Installation im Demo-Verzeichnisbaum benutzt. Diese wird über
 Anschließend müssen die Cores erzeugt werden. Dafür gibt es ein Skript in `solr/scripts/setup/`.
 
 ### DataImportHandler
-Im Core `films2` wird der DIH konfiguriert. Dafür müssen in der solrconfig neben den Änderungen aus dem Vortrag einige jars eingegtragen werden.
+Im Core `films2` wird der DIH konfiguriert. Dafür müssen in der `solrconfig.xml` neben den Änderungen aus dem Vortrag einige jars eingetragen werden.
+Die Datei findet sich in `solr/solr-6.4.x/server/solr/films2/conf/`
 
 Die Zeilen sehen aus wie folgt:
 
@@ -22,7 +23,92 @@ Die Zeilen sehen aus wie folgt:
 ```
 und werden zu der Liste ab Zeile 80 hinzugefügt.
 
+Der RequestHandler
+```
+  <requestHandler name="/dataimport" class="solr.DataImportHandler">
+    <lst name="defaults">
+      <str name="config">solr-data-config.xml</str>
+      <str name="update.chain">initial-import</str>
+    </lst>
+  </requestHandler>
+
+ <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+          UpdateRequestProcessorChain
+      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+  <updateRequestProcessorChain name="initial-import">
+          <processor class="solr.IgnoreFieldUpdateProcessorFactory">
+                  <str name="fieldRegex">_version_</str>
+          </processor>
+          <processor class="solr.RunUpdateProcessorFactory" />
+  </updateRequestProcessorChain>
+```
+
+Der Abschnitt wird vor den ersten `<RequestHandler>` eingefügt.
+
+Eine Datei solr-data-config.xml muss neben der solrconfig.xml angelegt werden, mit folgendem Inhalt:
+
+```xml
+<dataConfig>
+  <document>
+    <entity name="sep" processor="SolrEntityProcessor"
+            url="http://127.0.0.1:8983/solr/films"
+            query="*:*"/>
+  </document>
+</dataConfig>
+```
+
+Nach den Änderungen muss solr neu gestartet werden mit `solr/solr-6.4.x/bin/solr restart`.
+
+Danach ist solr bereit zur Demo.
+
+
 ## Vorbereitung Elasticsearch
 
-Für Elasticsearch müssen die Indexe angelegt und die Mappings für Indexe `films` und `films2` eingespielt werden.
-Dafür muss der Cluster gestartet werden. 
+Vor dem Start von ES muss ein Kernelparameter angepasst werden.
+```
+sudo sysctl -w vm.max_map_count=262144
+```
+
+Für permanentes Setzen
+```
+$ grep vm.max_map_count /etc/sysctl.conf
+vm.max_map_count=262144
+```
+
+Der ES Cluster muss gestartet werden. Dies erfolgt über `docker-compose` in Verzeichnis `/es/docker-compose/es` mit Kommando
+```
+sudo docker-compose up
+```
+
+Es wird ebenfalls ein Admintool für ES gestartet, `cerebro`, es läuft dann unter [localhost:9000](http://localhost:9000).
+Für die Verbindung mit dem ES-Cluster wird eingegeben:  `http://esmaster:9200`
+
+
+Für Elasticsearch müssen die Indexe angelegt und die Mappings für Indexe `films` und `films2` eingespielt werden. Dafür gibt es Skripte in
+`es/scripts`
+
+Es wird ein Beispiel analog zu Solr films benutzt. Die Dokumente wurden für den Import mit `jq` für das Elasticsearch Bulk-API in Form gebracht.  
+
+Indexe `films` und `films2` anlegen mit
+```
+./createIndex.sh films indexmappingsfilms.json
+./createIndex.sh films2 indexmappingsfilms2.json
+```
+
+Dokumente laden mit
+```
+./importFilms.sh es_films.json
+```
+
+## ES Reindex API Demo
+
+
+## stream2es Demo
+
+
+## logstash Reindex Demo
+
+
+
+--- 
+TODO:  docker-compose.yml  enthält noch tomsen als USER! Verwendung von $USER?
