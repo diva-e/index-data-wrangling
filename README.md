@@ -12,7 +12,7 @@ Es wird eine solr Installation im Demo-Verzeichnisbaum benutzt. Diese wird über
 Anschließend müssen die Cores erzeugt werden. Dafür gibt es ein Skript in `solr/scripts/setup/`.
 
 ### DataImportHandler
-Im Core films2 wird der DIH konfiguriert. Dafür müssen in der solrconfig neben den Änderungen aus dem Vortrag einige jars eingegtragen werden.
+Im Core `films2` wird der DIH konfiguriert. Dafür müssen in der solrconfig neben den Änderungen aus dem Vortrag einige jars eingegtragen werden.
 
 Die Zeilen sehen aus wie folgt:
 
@@ -20,6 +20,9 @@ Die Zeilen sehen aus wie folgt:
   <lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-dataimporthandler-\d.*\.jar" />
   <lib dir="${solr.install.dir:../../../..}/dist/" regex="solr-dataimporthandler-extras-\d.*\.jar" />
 ```
-und werden am besten zu der Liste ab Zeile 80 hinzugefügt.
+und werden zu der Liste ab Zeile 80 hinzugefügt.
 
 ## Vorbereitung Elasticsearch
+
+Für Elasticsearch müssen die Indexe angelegt und die Mappings für Indexe `films` und `films2` eingespielt werden.
+Dafür muss der Cluster gestartet werden. 
