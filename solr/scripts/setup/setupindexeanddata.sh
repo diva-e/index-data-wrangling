@@ -40,7 +40,14 @@ curl http://localhost:8983/solr/films2/schema -X POST -H 'Content-type:applicati
 
 
 $SOLR_HOME/bin/post -c films $SOLR_HOME/example/films/films.json
+$SOLR_HOME/bin/post -c films2 $SOLR_HOME/example/films/films.json
 
+# remove docs in films2 after creating the schema correctly
+curl http://localhost:8983/solr/films2/update --data '<delete><query>*:*</query></delete>' -H 'Content-type:text/xml; charset=utf-8'
+curl http://localhost:8983/solr/films2/update --data '<commit/>' -H 'Content-type:text/xml; charset=utf-8'
+
+
+# congigure /browse for films
 curl http://localhost:8983/solr/films/config/params -H 'Content-type:application/json'  -d '{
 "update" : {
   "facets": {
