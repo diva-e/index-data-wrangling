@@ -4,7 +4,7 @@ services:
     image: docker.elastic.co/logstash/logstash:5.2.2
     container_name: logstash
     volumes:
-      - ~/Talks/datawrangling/es/logstash/pipeline/:/usr/share/logstash/pipeline/
+      - ../../logstash/pipeline/:/usr/share/logstash/pipeline/
     networks:
       - es_esnet
 
