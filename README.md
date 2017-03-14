@@ -24,7 +24,7 @@ Die Zeilen sehen aus wie folgt:
 und werden zu der Liste ab Zeile 80 hinzugefügt.
 
 Der RequestHandler
-```
+```xml
   <requestHandler name="/dataimport" class="solr.DataImportHandler">
     <lst name="defaults">
       <str name="config">solr-data-config.xml</str>
