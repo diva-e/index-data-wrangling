@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SOLR_HOME=../../solr/solr-6.4.2
+SOLR_HOME=../../solr-6.4.2
 
 $SOLR_HOME/bin/solr stop
 rm $SOLR_HOME/server/logs/*.log

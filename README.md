@@ -9,7 +9,7 @@ Die Demos laufen auf einem Ubuntu 16.10
 ## Vorbereitung Solr 
 Es wird eine solr Installation im Demo-Verzeichnisbaum benutzt. Diese wird über das install-Skript in `./install/` erstellt.
 
-Anschließend müssen die Cores erzeugt werden. Dafür gibt es ein Skript in `solr/setup/`.
+Anschließend müssen die Cores erzeugt werden. Dafür gibt es ein Skript in `solr/scripts/setup/`.
 
 ### DataImportHandler
 Im Core films2 wird der DIH konfiguriert. Dafür müssen in der solrconfig neben den Änderungen aus dem Vortrag einige jars eingegtragen werden.
