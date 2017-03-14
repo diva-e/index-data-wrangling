@@ -100,15 +100,4 @@ Dokumente laden mit
 ./importFilms.sh es_films.json
 ```
 
-## ES Reindex API Demo
-
-
-## stream2es Demo
-
-
-## logstash Reindex Demo
-
-
-
---- 
-TODO:  docker-compose.yml  enthält noch tomsen als USER! Verwendung von $USER?
+Danach ist Elasticsearch bereit zur Demo.
