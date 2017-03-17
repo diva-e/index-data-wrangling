@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SOLR_URL=$1
-echo "solr url is  $SOLR_URL"
+
 
 docsPerFile=300
 query=*:*
@@ -9,6 +9,10 @@ query=*:*
 TIMESTAMP=$( date +%Y%m%d%H%M%S )
 baseFilename=solr-dump-$TIMESTAMP
 
+error() {
+	echo $1 >&2
+	exit 1
+}
 
 require_variable() {
 	while [[ $# -gt 0 ]]; do
@@ -19,7 +23,8 @@ require_variable() {
 }
 
 solr_export() {
-#    require_variable SOLR_URL
+    require_variable SOLR_URL
+    echo "solr url is: $SOLR_URL"
 
     docCount=`curl -s "$SOLR_URL/select?q=$query&rows=0&wt=json"  | sed -r 's/.*"numFound":([0-9]+).*/\1/'`
 
