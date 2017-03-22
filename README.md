@@ -4,7 +4,15 @@ Materialien zum Vortrag zum Nachstellen und Ausprobieren.
 ## Voraussetzungen
 Die Demos laufen auf einem Ubuntu 16.10
 * aktuelles docker und docker-compose
-* für ES bulk Import der Demodaten wird [jq](https://stedolan.github.io/jq/) für Konvertierung benötigt, wenn man die Konvertierung der solr Demodaten selbst nachvollziehen will
+* für ES bulk Import der Demodaten wird [jq](https://stedolan.github.io/jq/) für Konvertierung benötigt, wenn man die Konvertierung der solr Demodaten selbst nachvollziehen will.
+
+Docker Versionen:
+```
+Docker version 17.03.0-ce, build 3a232c8
+docker-compose version 1.11.2, build dfed245
+
+```
+
 
 ## Vorbereitung Solr 
 Es wird eine solr Installation im Demo-Verzeichnisbaum benutzt. Diese wird über das install-Skript in `./install/` erstellt.
