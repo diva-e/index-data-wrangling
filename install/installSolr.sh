@@ -20,6 +20,10 @@ fi
 # untar into solr dir
 if [ -f "solr-$SOLR_VERSION.tgz"  ]
 then
+    echo solr-$SOLR_VERSION.tgz  auspacken nach ../solr/
     tar xzf solr-$SOLR_VERSION.tgz -C ../solr/
+    echo fertig.
+else
+    echo Archiv solr-$SOLR_VERSION.tgz scheint zu fehlen?
 fi
 
