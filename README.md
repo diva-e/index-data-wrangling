@@ -75,12 +75,17 @@ $ grep vm.max_map_count /etc/sysctl.conf
 vm.max_map_count=262144
 ```
 
-Der ES Cluster muss gestartet werden. Dies erfolgt über `docker-compose` in Verzeichnis `/es/docker-compose/es` mit Kommando
+Vor dem Start von Elasticsearch müssen Schreibrechte auf Verzeichnis `es/elasticsearch/data` mit 
+```
+chmod a+x es/elasticsearch/data
+```
+gegeben werden. 
+Der ES Cluster wird gestartet in Verzeichnis `/es/docker-compose/es` mit Kommando
 ```
 sudo docker-compose up
 ```
 
-Es wird ebenfalls ein Admintool für ES gestartet, `cerebro`, es läuft dann unter [localhost:9000](http://localhost:9000).
+Es wird ebenfalls ein Admintool für ES gestartet, `cerebro`, das läuft unter [localhost:9000](http://localhost:9000).
 Für die Verbindung mit dem ES-Cluster wird eingegeben:  `http://esmaster:9200`
 
 
@@ -101,3 +106,4 @@ Dokumente laden mit
 ```
 
 Danach ist Elasticsearch bereit zur Demo.
+
